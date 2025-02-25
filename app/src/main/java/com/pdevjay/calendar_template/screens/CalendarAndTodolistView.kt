@@ -61,9 +61,9 @@ fun CalendarAndTodoScreen(
         verticalArrangement = Arrangement.Top
     ) {
         // 캘린더 영역
-        Box(modifier = Modifier.height(calendarHeight)) {
+//        Box(modifier = Modifier.height(calendarHeight)) {
             MainCalendarView(viewModel = viewModel)
-        }
+//        }
 
         TodoList(expanded)
         // 날짜가 선택되면 TodoList가 슬라이드되어 나타납니다.

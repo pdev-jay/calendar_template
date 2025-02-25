@@ -9,5 +9,6 @@ import java.time.YearMonth
 @RequiresApi(Build.VERSION_CODES.O)
 data class CalendarState  constructor(
     val currentMonth: YearMonth = YearMonth.now(),
-    val selectedDate: LocalDate? = null
+    val selectedDate: LocalDate? = null,
+    val isExpanded: Boolean = true
 )

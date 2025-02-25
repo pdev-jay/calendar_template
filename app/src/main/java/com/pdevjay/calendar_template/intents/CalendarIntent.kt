@@ -10,4 +10,5 @@ sealed class CalendarIntent {
     data class DateSelected(val date: LocalDate) : CalendarIntent()
     object DateUnselected : CalendarIntent()
     data class MonthChanged(val month: YearMonth) : CalendarIntent()
+    data class SetExpanded(val isExpanded: Boolean) : CalendarIntent()
 }

@@ -106,6 +106,7 @@ fun MainCalendarView(
                 DaysGrid(
                     currentMonth = monthForPage,
                     selectedDate = state.selectedDate,
+                    isExpanded = state.isExpanded,
                     onDateSelected = { date ->
                         if (state.selectedDate == null || state.selectedDate != date) {
                             viewModel.processIntent(CalendarIntent.DateSelected(date))

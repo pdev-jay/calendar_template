@@ -28,14 +28,18 @@ class CalendarViewModel @Inject constructor() : ViewModel() {
             }
             is CalendarIntent.DateSelected -> {
                 _state.value = _state.value.copy(selectedDate = intent.date)
+                _state.value = _state.value.copy(isExpanded = false)
             }
             is CalendarIntent.DateUnselected -> {
                 _state.value = _state.value.copy(selectedDate = null)
+                _state.value = _state.value.copy(isExpanded = true)
             }
             is CalendarIntent.MonthChanged -> {
                 _state.value = _state.value.copy(currentMonth = intent.month)
             }
-
+            is CalendarIntent.SetExpanded -> {
+                _state.value = _state.value.copy(isExpanded = intent.isExpanded)
+            }
         }
     }
 }
