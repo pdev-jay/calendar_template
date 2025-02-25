@@ -8,8 +8,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -41,7 +41,7 @@ fun DaysGrid(
 
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .wrapContentSize()
                 .background(color = Color.White)
         ) {
             for (week in 0 until totalWeeks) {
