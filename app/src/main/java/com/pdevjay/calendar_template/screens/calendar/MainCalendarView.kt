@@ -76,6 +76,7 @@ fun MainCalendarView(
                 // VerticalPager에 계산된 calendarHeight를 적용
                 VerticalPager(
                     state = pagerState,
+                    userScrollEnabled = state.isExpanded,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(calendarHeight)
