@@ -39,11 +39,10 @@ fun WeekRow(
 ) {
     Row(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .background(color = Color.White)
-            .drawBehind {
-                drawTopBorder(2.dp, Color.LightGray) // Draw a blue border at the top
-            }
+            .drawBehind { drawTopBorder(2.dp, Color.LightGray) },
+        verticalAlignment = Alignment.CenterVertically
     ) {
         for (day in 0 until 7) {
             val cellIndex = week * 7 + day
@@ -61,15 +60,16 @@ fun WeekRow(
     }
 }
 
-fun DrawScope.drawTopBorder(borderThickness: Dp, borderColor: Color) {
+fun androidx.compose.ui.graphics.drawscope.DrawScope.drawTopBorder(borderThickness: Dp, borderColor: Color) {
     val strokeWidth = borderThickness.toPx()
     drawLine(
         color = borderColor,
-        start = androidx.compose.ui.geometry.Offset(0f, 0f), // Starting at the top-left
-        end = androidx.compose.ui.geometry.Offset(size.width, 0f), // Ending at the top-right
+        start = androidx.compose.ui.geometry.Offset(0f, 0f),
+        end = androidx.compose.ui.geometry.Offset(size.width, 0f),
         strokeWidth = strokeWidth
     )
 }
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview

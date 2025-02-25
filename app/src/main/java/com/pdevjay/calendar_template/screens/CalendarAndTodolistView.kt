@@ -9,7 +9,6 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -35,71 +34,49 @@ fun CalendarAndTodoScreen(
     modifier: Modifier = Modifier,
     viewModel: CalendarViewModel = hiltViewModel()
 ) {
-    // ViewModel의 상태 구독 (캘린더의 선택된 날짜 포함)
     val state by viewModel.state.collectAsState()
 
-    // 현재 기기 화면의 설정을 가져옴
-    val configuration = LocalConfiguration.current
-    val screenHeight = configuration.screenHeightDp.dp
-
-    // date 선택 시 캘린더가 확장/축소되는지 여부
-    val expanded = state.selectedDate == null
-
-    // 확장 시 100%, 축소 시 50% 높이 사용 (비율은 필요에 따라 조정)
-    val expandedHeight = screenHeight * 1f
-    val collapsedHeight = screenHeight * 0.5f
-
-    // animateDpAsState를 사용하여 높이 변화에 애니메이션 효과 적용
-    val calendarHeight by animateDpAsState(
-        targetValue = if (expanded) expandedHeight else collapsedHeight,
-        animationSpec = tween(durationMillis = 300)
-    )
-
     Column(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top
     ) {
-        // 캘린더 영역
-//        Box(modifier = Modifier.height(calendarHeight)) {
-            MainCalendarView(viewModel = viewModel)
-//        }
+        // Calendar area
+        MainCalendarView(viewModel = viewModel)
 
-        TodoList(expanded)
-        // 날짜가 선택되면 TodoList가 슬라이드되어 나타납니다.
+        // TodoList area appears only when a date is selected (collapsed state).
+        AnimatedVisibility(
+            visible = !state.isExpanded,
+            enter = slideInVertically(
+                initialOffsetY = { fullHeight -> fullHeight },
+                animationSpec = tween(durationMillis = 300)
+            ),
+            exit = slideOutVertically(
+                targetOffsetY = { fullHeight -> fullHeight },
+                animationSpec = tween(durationMillis = 300)
+            )
+        ) {
+            TodoList()
+        }
     }
 }
 
 @Composable
-fun TodoList(expanded:Boolean) {
-    AnimatedVisibility(
-        visible = !expanded,
-        enter = slideInVertically(
-            // 아래에서 위로 슬라이드 (애니메이션 duration: 300ms)
-            initialOffsetY = { fullHeight -> fullHeight },
-            animationSpec = tween(durationMillis = 300)
-        ),
-        exit = slideOutVertically(
-            targetOffsetY = { fullHeight -> fullHeight },
-            animationSpec = tween(durationMillis = 300)
-        )
+fun TodoList() {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
+            .height(200.dp)
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface)
-                .padding(16.dp)
-        ) {
-            items((1..20).toList()) { event ->
-                Text(
-                    text = "Event $event",
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
+        items((1..20).toList()) { event ->
+            Text(
+                text = "Event $event",
+                modifier = Modifier.padding(16.dp)
+            )
         }
     }
-
 }
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview

@@ -45,11 +45,7 @@ fun DayCell(
     ) {
         if (dayNumber in 1..daysInMonth) {
             val date = currentMonth.atDay(dayNumber)
-            val textColor = when {
-                date == LocalDate.now() -> Color.Red
-                else -> Color.Black
-            }
-
+            val textColor = if (date == LocalDate.now()) Color.Red else Color.Black
             Text(
                 text = dayNumber.toString(),
                 style = MaterialTheme.typography.bodyLarge,
